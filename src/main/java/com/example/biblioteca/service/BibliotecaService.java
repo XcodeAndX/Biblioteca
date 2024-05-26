@@ -12,6 +12,8 @@ import java.util.Date;
 @Service
 public class BibliotecaService {
 
+
+
     @Autowired
     private LibroRepository libroRepository;
 
@@ -45,4 +47,15 @@ public class BibliotecaService {
             }
         }
     }
+
+
+    public void agregarLibro(Libro libro) {
+        libroRepository.save(libro);
+    }
+
+    public Libro buscarPorTitulo(String titulo) {
+        return libroRepository.findByTitulo(titulo);
+    }
+
+
 }
