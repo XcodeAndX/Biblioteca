@@ -33,16 +33,33 @@ public class BibliotecaController {
 
     @PostMapping("/prestamos")
     public ResponseEntity<String> realizarPrestamo(@RequestParam Long idLibro, @RequestParam Long idUsuario) {
-        bibliotecaService.agregarPrestamo(idLibro, idUsuario);
-        return new ResponseEntity<>("Préstamo realizado correctamente", HttpStatus.CREATED);
+        try {
+            bibliotecaService.agregarPrestamo(idLibro, idUsuario);
+            return new ResponseEntity<>("Préstamo realizado correctamente", HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/prestamos/{idPrestamo}")
     public ResponseEntity<String> devolverPrestamo(@PathVariable Long idPrestamo) {
-        bibliotecaService.devolverPrestamo(idPrestamo);
-        return new ResponseEntity<>("Préstamo devuelto correctamente", HttpStatus.OK);
+        try {
+            bibliotecaService.devolverPrestamo(idPrestamo);
+            return new ResponseEntity<>("Préstamo devuelto correctamente", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
-    
+    @PostMapping("/reservas")
+    public ResponseEntity<String> realizarReserva(@RequestParam Long idLibro, @RequestParam Long idUsuario) {
+        try {
+            bibliotecaService.agregarReserva(idLibro, idUsuario);
+            return new ResponseEntity<>("Reserva realizada correctamente", HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }
