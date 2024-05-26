@@ -31,4 +31,18 @@ public class BibliotecaController {
         }
     }
 
+    @PostMapping("/prestamos")
+    public ResponseEntity<String> realizarPrestamo(@RequestParam Long idLibro, @RequestParam Long idUsuario) {
+        bibliotecaService.agregarPrestamo(idLibro, idUsuario);
+        return new ResponseEntity<>("Préstamo realizado correctamente", HttpStatus.CREATED);
+    }
+
+    @PutMapping("/prestamos/{idPrestamo}")
+    public ResponseEntity<String> devolverPrestamo(@PathVariable Long idPrestamo) {
+        bibliotecaService.devolverPrestamo(idPrestamo);
+        return new ResponseEntity<>("Préstamo devuelto correctamente", HttpStatus.OK);
+    }
+
+    
+
 }
